@@ -26,6 +26,7 @@ def guessthenumber(min_val, max_val):
             break
 
     print("Goodbye!")
+
 min_r = int(input("Enter your minimum value for the game: "))
-max_r = int(input("Enter your maximum value for the game: "))
+max_r = int(input("Enter your maximum value for the game: ")) 
 guessthenumber(min_r, max_r)

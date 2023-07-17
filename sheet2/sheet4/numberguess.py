@@ -1,15 +1,15 @@
 from random import randint
 
 def guessthenumber(min_val, max_val):
-    number = 100
     again = "yes"
 
     while again == "yes":
         number = randint(min_val, max_val)
-        print("OK, I've thought of a number between {min_val} and {max_val}.\n")
+        print(f"OK, I've thought of a number between {min_val} and {max_val}.\n")
         prompt = "Make a guess: "
         answer = -1
         counter = 0
+
         while answer != number:
             answer = int(input(prompt))
             counter = counter + 1
@@ -26,5 +26,6 @@ def guessthenumber(min_val, max_val):
             break
 
     print("Goodbye!")
-
-guessthenumber()
+min_r = int(input("Enter your minimum value for the game: "))
+max_r = int(input("Enter your maximum value for the game: "))
+guessthenumber(min_r, max_r)

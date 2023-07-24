@@ -3,7 +3,7 @@ from gasp import *
 
 Sc_width = 640
 Sc_lenght = 480
-begin_graphics(Sc_width, Sc_lenght, title="Moving Circle", background=color.WHITE)
+begin_graphics(Sc_width, Sc_lenght)
 
 
 circle_radius = 10

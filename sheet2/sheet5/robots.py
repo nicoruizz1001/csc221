@@ -1,12 +1,12 @@
 from gasp import *
 import time
+from random import randint
 
+player_x = 63
+player_y = 47
 
-player_x = 10
-player_y = 10
-
-robot_x = 0
-robot_y = 0
+robot_x = 63
+robot_y = 40
 
 def place_robot():
     global robot_x, robot_y, robot_shape
@@ -69,6 +69,14 @@ def move_robot():
 
     move_to(robot_shape, (10 * robot_x + 5, 10 * robot_y + 5))
 
+def check_collisions():
+    global finished
+
+    if player_x == robot_x and player_y == robot_y:
+        finished = True
+        clear_screen()
+        Text("Game Over", (320, 240), size=20, color=color.BLUE) 
+        sleep(5)
 
 place_robot()
 place_player()
@@ -77,6 +85,6 @@ finished = False
 while not finished:
     move_player()
     move_robot()
-
+    check_collisions()
 
 end_graphics()

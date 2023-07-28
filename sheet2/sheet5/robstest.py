@@ -18,16 +18,12 @@ def grid():
     for y in range(0,480,20):
         Line((0,y),(640,y),thickness=.01,color='lightgray')
 
-while True:
-    clear_screen()
-    grid()  
-    Circle((circle_x, circle_y), circle_radius, filled=True, color=color.BLUE)
-
-    key = update_when('key_pressed')
-    key_alt = update_when('key_pressed')
-    if key == 'Escape':  
-        break
-    elif key == 's':
+def gamer():
+ 
+    key = update_when('key_pressed') 
+    global player 
+    player = Circle((circle_x, circle_y), circle_radius, filled=True, color=color.BLUE)  
+    if key == 's':
         circle_y -= move_direction
     elif key == 'w':
         circle_y += move_direction
@@ -47,7 +43,16 @@ while True:
     elif key == 'Shift_L':
         circle_x -= move_direction
         circle_y -= move_direction 
+    remove_from_screen(player) 
+    return
+def rob_ots():
+    global player
+    grid()
+    playing = True
+    while playing:
+        gamer()
 
-    
 
+rob_ots()
 end_graphics()
+    

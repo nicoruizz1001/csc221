@@ -1,4 +1,6 @@
 from gasp import *
+import time
+
 
 player_x = 10
 player_y = 10
@@ -13,7 +15,6 @@ def place_robot():
 def place_player():
     global player_x, player_y, player_shape
     player_shape = Circle((player_x, player_y), 10, filled=True, color=color.BLUE)
-
 
 begin_graphics()
 
@@ -68,6 +69,7 @@ def move_robot():
 
     move_to(robot_shape, (10 * robot_x + 5, 10 * robot_y + 5))
 
+
 place_robot()
 place_player()
 finished = False
@@ -76,4 +78,5 @@ while not finished:
     move_player()
     move_robot()
 
-end_graphics() 
+
+end_graphics()

@@ -1,19 +1,14 @@
-from gasp import * 
+from gasp import *
+
 begin_graphics()
-def printface(x, y):
-    for u in x-40, x+40:
-        Circle((u, y+20), 10)
-    Circle((x,y), 100)
-    Line((x, y + 10), (x-20, y-30))
-    Line((x-20, y - 30), (x+10, y-30))
-    Arc((x, y-40), 30, 225, 315, color="red")
-    for u in x-40, x+40: 
-        Arc((u, y+30), 20, 30, 150, color="brown")
 
+key_text = Text("a", (320, 240), size=48)
 
-for col in range (40, 581, 80):
-    for row in range(40, 440, 80):
-        printface(col, row)
+while True:
+    key = update_when('key_pressed')
+    remove_from_screen(key_text)
+    key_text = Text(key, (320, 240), size=48)
+    if key == 'q':     # See Sheet C if you don't understand this
+        break          # See Sheet L if you aren't sure what this means
 
-update_when('key_pressed')     
-end_graphics() 
+end_graphics()

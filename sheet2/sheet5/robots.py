@@ -15,8 +15,8 @@ def place_robot():
     robot_shape = Circle((robot_x, robot_y), 10, filled=True, color=color.RED)
 
 def place_player():
-    global player_x, player_y, player_shape
-    player_shape = Circle((player_x, player_y), 10, filled=True, color=color.BLUE)
+    global player_x, player_y
+
 
 begin_graphics()
 
@@ -96,13 +96,15 @@ def collided():
     return player_x == robot_x and player_y == robot_y
 
 def safely_place_player():
-    place_player()
-
-    while collided():
+    global player_shape
+    while True:
         place_player()
+        player_shape = Circle((player_x, player_y), 10, filled=True, color=color.BLUE)
+        if not collided():
+            break
 
 place_robot()
-safely_place_player()
+safely_place_player() 
 finished = False
 
 while not finished:

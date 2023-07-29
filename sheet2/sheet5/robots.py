@@ -2,8 +2,10 @@ from gasp import *
 import time
 from random import randint
 
-player_x = 63
-player_y = 47
+player_x = randint(10,64)
+player_y = randint(10,48)
+
+
 
 robot_x = 63
 robot_y = 40
@@ -19,8 +21,7 @@ def place_player():
 begin_graphics()
 
 def move_player():
-    global player_x, player_y, player_shape
-
+    global player_x, player_y, player_shape, teleport
     key = update_when('key_pressed')
 
     if key == 'd' and player_x < 63:
@@ -51,8 +52,21 @@ def move_player():
             player_x -= 1
         if player_y < 46:
             player_y += 1
-
     move_to(player_shape, (10 * player_x + 5, 10 * player_y + 5))
+
+teleport = 0 
+
+def teleport_count():
+    global teleport, player_x, player_y, key
+    key = update_when('key_pressed')
+    if teleport <= 5:
+        if key == 'space':
+            teleport += 1
+            player_x = randint(10,64)
+            player_y = randint(10,48)   
+
+            
+
 
 def move_robot():
     global player_x, player_y, robot_x, robot_y
@@ -76,15 +90,24 @@ def check_collisions():
         finished = True
         clear_screen()
         Text("Game Over", (320, 240), size=20, color=color.BLUE) 
-        sleep(5)
+        sleep(3)
+
+def collided():
+    return player_x == robot_x and player_y == robot_y
+
+def safely_place_player():
+    place_player()
+
+    while collided():
+        place_player()
 
 place_robot()
-place_player()
+safely_place_player()
 finished = False
 
 while not finished:
     move_player()
     move_robot()
     check_collisions()
-
+    teleport_count() 
 end_graphics()

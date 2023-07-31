@@ -19,12 +19,20 @@ player.y = randint(10,48)
 robot.x = 63
 robot.y = 40
 
-def place_robot():
-    global robot
-    robot = Robot()
-    robot.x = 63
-    robot.y = 40
-    robot.shape = Circle((robot.x, robot.y), 10, filled=True, color=color.RED)
+numbots = 10
+
+def place_robots():
+    global robots
+
+    robots = []
+
+    while len(robots) < numbots:
+        robot = Robot()
+        robot.x = randint(0, 63)
+        robot.y = randint(0, 47)
+        if not collided(robot, robots):
+            robot.shape = Box((10*robot.x, 10*robot.y), 10, 10, filled=True, color=color.RED)
+            robots.append(robot)
 
 def place_player():
     global player
@@ -83,48 +91,52 @@ def teleport_count():
             
 
 
-def move_robot():
+def move_robots():
     global player, robot
+    
+    for robot in robots:
+        if robot.x < player.x:
+            robot.x += 1
+        elif robot.x > player.x:
+            robot.x -= 1
 
-    if robot.x < player.x:
-        robot.x += 1
-    elif robot.x > player.x:
-        robot.x -= 1
+        if robot.y < player.y:
+            robot.y += 1
+        elif robot.y > player.y:
+            robot.y -= 1
 
-    if robot.y < player.y:
-        robot.y += 1
-    elif robot.y > player.y:
-        robot.y -= 1
-
-    move_to(robot.shape, (10 * robot.x + 5, 10 * robot.y + 5))
+        move_to(robot.shape, (10 * robot.x + 5, 10 * robot.y + 5))
 
 def check_collisions():
     global finished
-
-    if player.x == robot.x and player.y == robot.y:
-        finished = True
-        clear_screen()
-        Text("Game Over", (320, 240), size=20, color=color.BLUE) 
-        sleep(3)
-
-def collided():
-    return player.x == robot.x and player.y == robot.y
+    for robot in robots:
+        if player.x == robot.x and player.y == robot.y:
+            finished = True
+            clear_screen()
+            Text("Game Over", (320, 240), size=20, color=color.BLUE) 
+            sleep(3)
+            break 
+def collided(thing1, list_of_things):
+    for thing2 in list_of_things:
+        if thing1.x == thing2.x and thing1.y == thing2.y:
+            return True
+    return False
 
 def safely_place_player():
-    global player
+    global player, robots 
     while True:
         place_player()
         player.shape = Circle((player.x, player.y), 10, filled=True, color=color.BLUE)
-        if not collided():
+        if not collided(player, robots):
             break
 
-place_robot()
+place_robots()
 safely_place_player() 
 finished = False
 
 while not finished:
     move_player()
-    move_robot()
+    move_robots()
     check_collisions()
-    teleport_count() 
+    teleport_count()
 end_graphics()
